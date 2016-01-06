@@ -14,6 +14,8 @@ public class GridMap : MonoBehaviour {
     public Vector2 mapSize;
     public GameObject tilePrefab;
 
+    public GridTile[,] map;
+
     #endregion
 
     public void GenerateMap() {
@@ -23,7 +25,10 @@ public class GridMap : MonoBehaviour {
                 GameObject currTile = Instantiate(tilePrefab, tilePos, Quaternion.identity) as GameObject;
                 currTile.transform.SetParent(this.transform);
                 currTile.name = "Tile " + ((x * mapSize.y) + y);
-                currTile.AddComponent<GridTile>();
+                GridTile tile = currTile.AddComponent<GridTile>();
+                tile.xCoord = x;
+                tile.yCoord = y;
+                //map[x, y] = currTile.GetComponent<GridTile>();
             }
         }
     }
