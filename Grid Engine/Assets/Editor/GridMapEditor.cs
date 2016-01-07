@@ -14,15 +14,11 @@ public class GridMapEditor : Editor {
     #region Fields
 
     #endregion
-
-    void Awake() {
-        //type objectName = (type)target;
-    }
-
+    
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
-        GridMap map = target as GridMap;
+        GridMap map = (GridMap)target;
 
         if (GUILayout.Button("Build Map")) {
             map.GenerateMap();

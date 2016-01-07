@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Author: Matt Gipson
@@ -34,6 +35,8 @@ public static class GridHelper {
 
                 int checkX = gridX + x;
                 int checkY = gridY + y;
+
+                Debug.Log(grid);
 
                 //check if in bounds
                 if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1)) {
@@ -80,11 +83,12 @@ public static class GridHelper {
         return neighborsToReturn;
     }
 
-    public enum NeighborType {
-        Vertical, //top and bottom neighbors
-        Horizontal, //left and right neighbors
-        Cross, //horizontal and vertical neighbors
-        Diagonal, //diagonal neighbors
-        All //diagonal and cross
-    }
+}
+
+public enum NeighborType {
+    Vertical, //top and bottom neighbors
+    Horizontal, //left and right neighbors
+    Cross, //horizontal and vertical neighbors
+    Diagonal, //diagonal neighbors
+    All //diagonal and cross
 }

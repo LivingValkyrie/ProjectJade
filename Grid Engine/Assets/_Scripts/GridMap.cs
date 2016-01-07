@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 /// <summary>
 /// Author: Matt Gipson
@@ -11,26 +12,50 @@ using System.Collections.Generic;
 public class GridMap : MonoBehaviour {
     #region Fields
 
-    public Vector2 mapSize;
+    public int width, height;
+    public string generatedMapName;
     public GameObject tilePrefab;
 
-    public GridTile[,] map;
+    [SerializeField]
+    public GridTile[] map;
 
     #endregion
 
+    void Awake() {
+        print(GetHashCode() + " gridmap from gridmap start");
+        print(map.GetHashCode() + " map from map gridmap start");
+    }
+
     public void GenerateMap() {
-        for (int x = 0; x < mapSize.x; x++) {
-            for (int y = 0; y < mapSize.y; y++) {
-                Vector3 tilePos = new Vector3(-mapSize.x / 2 + 0.5f + x, -mapSize.y / 2 + 0.5f + y);
+        map = new GridTile[width * height];
+
+        if (transform.FindChild(generatedMapName)) {
+            DestroyImmediate(transform.FindChild(generatedMapName).gameObject);
+        }
+
+        GameObject generatedMap = new GameObject(generatedMapName);
+        generatedMap.transform.parent = this.transform;
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                Vector3 tilePos = new Vector3(-width / 2 + 0.5f + x, -height / 2 + 0.5f + y);
                 GameObject currTile = Instantiate(tilePrefab, tilePos, Quaternion.identity) as GameObject;
-                currTile.transform.SetParent(this.transform);
-                currTile.name = "Tile " + ((x * mapSize.y) + y);
+                currTile.transform.SetParent(generatedMap.transform);
+                currTile.name = "Tile " + ((x * height) + y);
+
                 GridTile tile = currTile.AddComponent<GridTile>();
                 tile.xCoord = x;
                 tile.yCoord = y;
-                //map[x, y] = currTile.GetComponent<GridTile>();
+                tile.gridMap = this;
+                map[y * width + x] = tile;
+                EditorUtility.SetDirty(tile);
             }
         }
+
+        EditorUtility.SetDirty(this);
+
+        print(map.GetHashCode() + " map hash from gridmap");
+        print(GetHashCode() + " gridmap hash from gridmap");
     }
 
 }

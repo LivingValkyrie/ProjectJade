@@ -14,29 +14,23 @@ public class GridTile : MonoBehaviour {
 
     public TileClass tileClass;
     public TileType tileType;
-    public GridMap map;
+    public GridMap gridMap;
     public int xCoord, yCoord;
     public GridNode<GridTile> node;
 
-    public delegate void TileEventHandler();
-
-    public event TileEventHandler typeChanged;
-    public event TileEventHandler classChanged;
-    public event TileEventHandler neighborChanged; //might not need
-
     #endregion
 
-    void OnEnable() {
+    void OnEnable() {}
+
+    void Awake() {
         node = new GridNode<GridTile>(this);
 
-        //AssignNeighbors(); cant run this til after entire grid is made. do this in awake?
+        AssignNeighbors();
     }
-
-    void OnDisable() {}
 
     public void AssignNeighbors() {
         //get neighbors
-        List<GridTile> neighbors = GridHelper.FindNeighbors(map.map, xCoord, yCoord, GridHelper.NeighborType.All);
+        List<GridTile> neighbors = FindNeighbors(gridMap.map, xCoord, yCoord, NeighborType.All);
 
         //for each
         foreach (GridTile neighbor in neighbors) {
@@ -94,6 +88,67 @@ public class GridTile : MonoBehaviour {
     void OnClassChange() {}
     void OnTypeChange() {}
     void OnNeighborChange() {}
+
+    public List<GridTile> FindNeighbors(GridTile[] grid, int gridX, int gridY, NeighborType type, int radius = 1) {
+        List<GridTile> neighborsToReturn = new List<GridTile>();
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                if (x == 0 && y == 0) {
+                    continue; //inside current node
+                }
+
+                int checkX = gridX + x;
+                int checkY = gridY + y;
+
+                Debug.Log(grid);
+
+                //check if in bounds
+                //need to figure out logic to replace get lengths
+                if (checkX >= 0 && checkX < grid.GetLength(0) && checkY >= 0 && checkY < grid.GetLength(1)) {
+                    switch (type) {
+                        case NeighborType.Vertical:
+
+                            //same vertical plane
+                            if (x == 0) {
+                                neighborsToReturn.Add(grid[y * gridMap.width + x]);
+                            }
+                            break;
+                        case NeighborType.Horizontal:
+
+                            //same horizontal plane
+                            if (y == 0) {
+                                neighborsToReturn.Add(grid[y * gridMap.width + x]);
+                            }
+                            break;
+                        case NeighborType.Cross:
+
+                            //vertical and horizontal planes are both the same
+                            if (x == 0 || y == 0) {
+                                neighborsToReturn.Add(grid[y * gridMap.width + x]);
+                            }
+                            break;
+                        case NeighborType.Diagonal:
+
+                            //test if location has the same x and y compared to the base node
+                            if (Mathf.Abs(checkX - gridX) == Mathf.Abs(checkY - gridY)) {
+                                neighborsToReturn.Add(grid[y * gridMap.width + x]);
+                            }
+                            break;
+                        case NeighborType.All:
+
+                            //add all results
+                            neighborsToReturn.Add(grid[y * gridMap.width + x]);
+                            break;
+                    }
+                }
+            }
+        }
+
+        //return
+        return neighborsToReturn;
+    }
+
 }
 
 public enum TileType {

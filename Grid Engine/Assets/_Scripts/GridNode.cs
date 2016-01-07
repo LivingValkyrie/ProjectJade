@@ -1,5 +1,4 @@
 ﻿namespace LivingValkyrie.Grid {
-    [System.Serializable]
     public class GridNode<TGridType> {
         public GridNode<TGridType> leftNeighbor;
         public GridNode<TGridType> rightNeighbor;
