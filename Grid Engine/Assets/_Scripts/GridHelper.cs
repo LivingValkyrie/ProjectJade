@@ -83,6 +83,13 @@ public static class GridHelper {
         return neighborsToReturn;
     }
 
+    public static int GetIndex( int xCoord, int yCoord, int gridWidth ) {
+        int toReturn = 0;
+        int indexFromY = gridWidth * yCoord + xCoord;
+
+        return indexFromY;
+    }
+
 }
 
 public enum NeighborType {

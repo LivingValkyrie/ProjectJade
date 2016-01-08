@@ -20,12 +20,7 @@ public class GridMap : MonoBehaviour {
     public GridTile[] map;
 
     #endregion
-
-    void Awake() {
-        print(GetHashCode() + " gridmap from gridmap start");
-        print(map.GetHashCode() + " map from map gridmap start");
-    }
-
+    
     public void GenerateMap() {
         map = new GridTile[width * height];
 
@@ -41,7 +36,7 @@ public class GridMap : MonoBehaviour {
                 Vector3 tilePos = new Vector3(-width / 2 + 0.5f + x, -height / 2 + 0.5f + y);
                 GameObject currTile = Instantiate(tilePrefab, tilePos, Quaternion.identity) as GameObject;
                 currTile.transform.SetParent(generatedMap.transform);
-                currTile.name = "Tile " + ((x * height) + y);
+                currTile.name = "Tile " + (( y * width) + x);
 
                 GridTile tile = currTile.AddComponent<GridTile>();
                 tile.xCoord = x;
@@ -53,9 +48,6 @@ public class GridMap : MonoBehaviour {
         }
 
         EditorUtility.SetDirty(this);
-
-        print(map.GetHashCode() + " map hash from gridmap");
-        print(GetHashCode() + " gridmap hash from gridmap");
     }
 
 }

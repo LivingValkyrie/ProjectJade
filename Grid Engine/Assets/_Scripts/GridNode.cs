@@ -1,5 +1,8 @@
-﻿namespace LivingValkyrie.Grid {
-    public class GridNode<TGridType> {
+﻿using System;
+using System.Collections;
+
+namespace LivingValkyrie.Grid {
+    public class GridNode<TGridType> : IEnumerable {
         public GridNode<TGridType> leftNeighbor;
         public GridNode<TGridType> rightNeighbor;
         public GridNode<TGridType> topNeighbor;
@@ -24,5 +27,17 @@
             this.tile = tile;
         }
 
+        public IEnumerator GetEnumerator() {
+            //test
+            yield return leftNeighbor;
+            yield return rightNeighbor;
+            yield return topNeighbor;
+            yield return bottomNeighbor;
+            yield return topLeftNeighbor;
+            yield return topRightNeighbor;
+            yield return bottomLeftNeighbor;
+            yield return bottomRightNeighbor;
+            
+        }
     }
 }
