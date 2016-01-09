@@ -15,8 +15,8 @@ public class GridMap : MonoBehaviour {
     public int width, height;
     public string generatedMapName;
     public GameObject tilePrefab;
-
-    [SerializeField]
+    
+    [HideInInspector]
     public GridTile[] map;
 
     #endregion

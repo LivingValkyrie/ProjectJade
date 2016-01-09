@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using LivingValkyrie.Grid;
 
@@ -19,26 +18,33 @@ public class GridTile : MonoBehaviour {
     public int xCoord, yCoord;
     public GridNode<GridTile> node;
 
+    /// <summary>
+    /// Gets the index of this tile in gridmap's map array. if -1 then gridmap is null
+    /// </summary>
+    /// <value>
+    /// The index.
+    /// </value>
+    public int Index {
+        get {
+            if (gridMap != null) {
+                return (gridMap.width * yCoord) + xCoord;
+            }
+
+            return -1;
+        }
+    }
+
     #endregion
 
     void Awake() {
         node = new GridNode<GridTile>(this);
 
         AssignNeighbors();
-
-
-        int i = 0;
-        foreach (var n in node) {
-            print(gameObject.name + " run number " + i);
-            i++;
-        }
     }
 
     public void AssignNeighbors() {
-
         //get neighbors
         List<GridTile> neighbors = FindNeighbors(gridMap.map, xCoord, yCoord, NeighborType.All);
-        Debug.Log(neighbors.Count);
 
         //for each
         foreach (GridTile neighbor in neighbors) {
@@ -105,49 +111,44 @@ public class GridTile : MonoBehaviour {
                 int checkX = gridX + x;
                 int checkY = gridY + y;
 
-                try {
-                    //check if in bounds
-                    //need to figure out logic to replace get lengths
-                    if (checkX >= 0 && checkX < gridMap.width && checkY >= 0 && checkY < gridMap.height) {
-                        switch (type) {
-                            case NeighborType.Vertical:
+                //check if in bounds
+                //need to figure out logic to replace get lengths
+                if (checkX >= 0 && checkX < gridMap.width && checkY >= 0 && checkY < gridMap.height) {
+                    switch (type) {
+                        case NeighborType.Vertical:
 
-                                //same vertical plane
-                                if (x == 0) {
-                                    neighborsToReturn.Add(grid[GridHelper.GetIndex(checkX, checkY, gridMap.width)]);
-                                }
-                                break;
-                            case NeighborType.Horizontal:
+                            //same vertical plane
+                            if (x == 0) {
+                                neighborsToReturn.Add(grid[Index]);
+                            }
+                            break;
+                        case NeighborType.Horizontal:
 
-                                //same horizontal plane
-                                if (y == 0) {
-                                    neighborsToReturn.Add(grid[GridHelper.GetIndex(checkX, checkY, gridMap.width)]);
-                                }
-                                break;
-                            case NeighborType.Cross:
+                            //same horizontal plane
+                            if (y == 0) {
+                                neighborsToReturn.Add(grid[Index]);
+                            }
+                            break;
+                        case NeighborType.Cross:
 
-                                //vertical and horizontal planes are both the same
-                                if (x == 0 || y == 0) {
-                                    neighborsToReturn.Add(grid[GridHelper.GetIndex(checkX, checkY, gridMap.width)]);
-                                }
-                                break;
-                            case NeighborType.Diagonal:
+                            //vertical and horizontal planes are both the same
+                            if (x == 0 || y == 0) {
+                                neighborsToReturn.Add(grid[Index]);
+                            }
+                            break;
+                        case NeighborType.Diagonal:
 
-                                //test if location has the same x and y compared to the base node
-                                if (Mathf.Abs(checkX - gridX) == Mathf.Abs(checkY - gridY)) {
-                                    neighborsToReturn.Add(grid[GridHelper.GetIndex(checkX, checkY, gridMap.width)]);
-                                }
-                                break;
-                            case NeighborType.All:
+                            //test if location has the same x and y compared to the base node
+                            if (Mathf.Abs(checkX - gridX) == Mathf.Abs(checkY - gridY)) {
+                                neighborsToReturn.Add(grid[Index]);
+                            }
+                            break;
+                        case NeighborType.All:
 
-                                //add all results
-                                neighborsToReturn.Add(grid[GridHelper.GetIndex(checkX, checkY, gridMap.width)]);
-                                break;
-                        }
+                            //add all results
+                            neighborsToReturn.Add(grid[Index]);
+                            break;
                     }
-                } catch (Exception) {
-                    throw new Exception(String.Format("caught in neighbor finding {0}",
-                                                      GridHelper.GetIndex(checkX, checkY, gridMap.width)));
                 }
             }
         }
