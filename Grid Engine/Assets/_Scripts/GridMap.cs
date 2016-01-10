@@ -43,11 +43,9 @@ public class GridMap : MonoBehaviour {
                 tile.yCoord = y;
                 tile.gridMap = this;
                 map[y * width + x] = tile;
-                EditorUtility.SetDirty(tile);
+
             }
         }
-
-        EditorUtility.SetDirty(this);
     }
 
 }

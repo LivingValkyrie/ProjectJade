@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using LivingValkyrie.Grid;
 
 /// <summary>
 /// Author: Matt Gipson
@@ -16,7 +15,7 @@ public class GridTile : MonoBehaviour {
     public TileType tileType;
     public GridMap gridMap;
     public int xCoord, yCoord;
-    public GridNode<GridTile> node;
+    public GridNode node;
 
     /// <summary>
     /// Gets the index of this tile in gridmap's map array. if -1 then gridmap is null
@@ -37,10 +36,18 @@ public class GridTile : MonoBehaviour {
     #endregion
 
     void Awake() {
-        node = new GridNode<GridTile>(this);
-
-        AssignNeighbors();
+        node = new GridNode(this);
     }
+
+    public void CalculateBorders() {
+        AssignNeighbors();
+
+        if (node.leftNeighbor != null) {
+            
+        }
+    }
+
+    #region Neighbor Methods
 
     public void AssignNeighbors() {
         //get neighbors
@@ -157,10 +164,7 @@ public class GridTile : MonoBehaviour {
         return neighborsToReturn;
     }
 
-    void OnClassChange() {}
-    void OnTypeChange() {}
-    void OnNeighborChange() {}
-
+    #endregion
 }
 
 public enum TileType {
