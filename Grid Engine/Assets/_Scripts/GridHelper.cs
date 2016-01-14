@@ -84,10 +84,7 @@ public static class GridHelper {
     }
 
     public static int GetIndex( int xCoord, int yCoord, int gridWidth ) {
-        int toReturn = 0;
-        int indexFromY = gridWidth * yCoord + xCoord;
-
-        return indexFromY;
+        return gridWidth * yCoord + xCoord;
     }
 
 }

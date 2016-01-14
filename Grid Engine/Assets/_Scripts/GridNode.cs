@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 
+[Serializable] //needs custom drawer
 public class GridNode : IEnumerable {
     public GridNode leftNeighbor;
     public GridNode rightNeighbor;

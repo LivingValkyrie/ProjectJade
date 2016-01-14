@@ -18,10 +18,10 @@ public class GridTile : MonoBehaviour {
     public GridNode node;
 
     /// <summary>
-    /// Gets the index of this tile in gridmap's map array. if -1 then gridmap is null
+    /// Gets the GridMap.GetIndex(checkX, checkY, gridMap.width) of this tile in gridmap's map array. if -1 then gridmap is null
     /// </summary>
     /// <value>
-    /// The index.
+    /// The GridMap.GetIndex(checkX, checkY, gridMap.width).
     /// </value>
     public int Index {
         get {
@@ -39,12 +39,10 @@ public class GridTile : MonoBehaviour {
         node = new GridNode(this);
     }
 
-    public void CalculateBorders() {
-        AssignNeighbors();
-
-        if (node.leftNeighbor != null) {
-            
-        }
+    void OnMouseDown() {
+        //foreach (GridTile neighbor in FindNeighbors( gridMap.map, xCoord, yCoord, NeighborType.All ) ) {
+        //    neighbor.GetComponent<SpriteRenderer>().sprite = null;
+        //}
     }
 
     #region Neighbor Methods
@@ -107,6 +105,7 @@ public class GridTile : MonoBehaviour {
     }
 
     public List<GridTile> FindNeighbors(GridTile[] grid, int gridX, int gridY, NeighborType type, int radius = 1) {
+
         List<GridTile> neighborsToReturn = new List<GridTile>();
 
         for (int x = -radius; x <= radius; x++) {
@@ -126,34 +125,35 @@ public class GridTile : MonoBehaviour {
 
                             //same vertical plane
                             if (x == 0) {
-                                neighborsToReturn.Add(grid[Index]);
+                                neighborsToReturn.Add(grid[GridMap.GetIndex(checkX, checkY, gridMap.width)]);
                             }
                             break;
                         case NeighborType.Horizontal:
 
                             //same horizontal plane
                             if (y == 0) {
-                                neighborsToReturn.Add(grid[Index]);
+                                neighborsToReturn.Add(grid[GridMap.GetIndex(checkX, checkY, gridMap.width)]);
                             }
                             break;
                         case NeighborType.Cross:
 
                             //vertical and horizontal planes are both the same
                             if (x == 0 || y == 0) {
-                                neighborsToReturn.Add(grid[Index]);
+                                neighborsToReturn.Add(grid[GridMap.GetIndex(checkX, checkY, gridMap.width)]);
                             }
                             break;
                         case NeighborType.Diagonal:
 
                             //test if location has the same x and y compared to the base node
                             if (Mathf.Abs(checkX - gridX) == Mathf.Abs(checkY - gridY)) {
-                                neighborsToReturn.Add(grid[Index]);
+                                neighborsToReturn.Add(grid[GridMap.GetIndex(checkX, checkY, gridMap.width)]);
                             }
                             break;
                         case NeighborType.All:
 
                             //add all results
-                            neighborsToReturn.Add(grid[Index]);
+                            
+                            neighborsToReturn.Add(grid[GridMap.GetIndex(checkX, checkY, gridMap.width)]);
                             break;
                     }
                 }

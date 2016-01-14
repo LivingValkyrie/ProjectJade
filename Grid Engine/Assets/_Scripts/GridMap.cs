@@ -48,4 +48,7 @@ public class GridMap : MonoBehaviour {
         }
     }
 
+    public static int GetIndex( int xCoord, int yCoord, int gridWidth ) {
+        return gridWidth * yCoord + xCoord;
+    }
 }
