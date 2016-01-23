@@ -8,12 +8,15 @@ using System.Collections.Generic;
 /// 
 /// Description: MapNode 
 /// </summary>
-public class MapNode : CursorNode {
+public class MapNode : MonoBehaviour {
     #region Fields
 
+    public MapNode leftNode, rightNode, topNode, bottomNode;
+    public bool unlocked = true;
+
     #endregion
-    
-    public override void OnSelect() {
+
+    public void OnSelect() {
         //throw new System.NotImplementedException();
     }
 }
