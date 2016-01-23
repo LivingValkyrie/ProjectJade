@@ -56,7 +56,7 @@
             // fileMenu_exit
             // 
             this.fileMenu_exit.Name = "fileMenu_exit";
-            this.fileMenu_exit.Size = new System.Drawing.Size(269, 38);
+            this.fileMenu_exit.Size = new System.Drawing.Size(152, 38);
             this.fileMenu_exit.Text = "Exit";
             this.fileMenu_exit.Click += new System.EventHandler(this.fileMenu_exit_Click);
             // 
@@ -71,7 +71,7 @@
             // helpMenu_About
             // 
             this.helpMenu_About.Name = "helpMenu_About";
-            this.helpMenu_About.Size = new System.Drawing.Size(269, 38);
+            this.helpMenu_About.Size = new System.Drawing.Size(180, 38);
             this.helpMenu_About.Text = "About";
             this.helpMenu_About.Click += new System.EventHandler(this.helpMenu_About_Click);
             // 
@@ -84,6 +84,7 @@
             this.timeLine_panel.Name = "timeLine_panel";
             this.timeLine_panel.Size = new System.Drawing.Size(1011, 664);
             this.timeLine_panel.TabIndex = 1;
+            this.timeLine_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.timeLine_panel_Paint);
             // 
             // nodeView_panel
             // 

@@ -40,9 +40,9 @@ public class GridTile : MonoBehaviour {
     }
 
     void OnMouseDown() {
-        //foreach (GridTile neighbor in FindNeighbors( gridMap.map, xCoord, yCoord, NeighborType.All ) ) {
-        //    neighbor.GetComponent<SpriteRenderer>().sprite = null;
-        //}
+        foreach ( GridTile neighbor in FindNeighbors( gridMap.map, xCoord, yCoord, NeighborType.All ) ) {
+            neighbor.GetComponent<SpriteRenderer>().sprite = null;
+        }
     }
 
     #region Neighbor Methods
