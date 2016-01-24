@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using LivingValkyrie.NodeEngine;
 
 /// <summary>
 /// Author: Matt Gipson
@@ -13,7 +14,7 @@ public class NodeCursor : MonoBehaviour {
 
     public MapNode startingNode;
     MapNode selectedNode;
-    
+
     #endregion
 
     void Start() {
@@ -21,7 +22,7 @@ public class NodeCursor : MonoBehaviour {
         Move();
     }
 
-    void Update() { 
+    void Update() {
         AttemptMove();
         if (Input.GetKeyDown(KeyCode.Return)) {
             selectedNode.OnSelect();
@@ -37,9 +38,10 @@ public class NodeCursor : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.A)) {
             //check if node exist and is unlocked
             if (selectedNode.leftNode != null) {
-                if ( selectedNode.leftNode.unlocked) {
+                if (selectedNode.leftNode.unlocked) {
                     //all good
-                    selectedNode = selectedNode.leftNode;
+                    selectedNode = selectedNode.leftNode as MapNode;
+
                     //update position
                     Move();
                 } else {

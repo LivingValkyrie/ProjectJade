@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace LivingValkyrie.NodeEngine {
@@ -6,17 +7,19 @@ namespace LivingValkyrie.NodeEngine {
     /// <summary>
     /// Author: Matt Gipson
     /// Contact: Deadwynn@gmail.com
-    /// Domain: www.livingvalkyrie.com
+    /// Domain: www.livingvalkyrie.net
     /// 
-    /// Description: MapNode 
+    /// Description: SelectionNode 
     /// </summary>
-    public class MapNode : FourWaySelectionNode {
+    public abstract class SelectionNode : MonoBehaviour {
         #region Fields
+
+        public bool unlocked = true;
 
         #endregion
 
-        public override void OnSelect() {
-            //throw new System.NotImplementedException();
-        }
+        public abstract void OnSelect();
+
     }
+
 }
