@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace LivingValkyrie.NodeEngine {
 
@@ -10,13 +11,18 @@ namespace LivingValkyrie.NodeEngine {
     /// 
     /// Description: MapNode 
     /// </summary>
-    public class MapNode : FourWaySelectionNode {
+    public class MapNode : SelectionNode {
         #region Fields
+
+        public string mapScene;
+
+        public MapNode leftNode, rightNode, topNode, bottomNode;
 
         #endregion
 
         public override void OnSelect() {
-            //throw new System.NotImplementedException();
+            //play selected sound
+            SceneManager.LoadScene(mapScene);
         }
     }
 }
